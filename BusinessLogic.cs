@@ -3311,23 +3311,6 @@ namespace A2DWebRole1
 
         #region - UTILITY -
 
-        internal bool CheckForExistingAccount(string UserName)
-        {
-            SqlConnection cn = new SqlConnection();
-            cn.ConnectionString = AppConfig.DbConnectionString;
-            SqlCommand cmd = cn.CreateCommand();
-            cmd.CommandText = "SELECT " +
-                "* " +
-                "FROM Artists";
-            cn.Open();
-            int retIntVal = (int)cmd.ExecuteScalar();
-            cn.Close();
-            bool status;
-            if (retIntVal > 0) status = true; // The UserName exists
-            else status = false;
-            return status;
-        }
-
         internal bool TestForValidEmailAddress(string emailAddress)
         {
             string pattern = @"[\w*.]+@[\w.]+\.\w+";
@@ -3338,7 +3321,6 @@ namespace A2DWebRole1
         internal bool TestSearchStringForSQLInjection(string searchTerm)
         {
             string pattern = ConfigurationManager.AppSettings["REGEX_Injection"].ToString();
-            //string pattern = @"(=)|(/)|(\\)|(:)|(--)|(')|admin|Admin|ADMIN|user|User|USER|name|Name|NAME|drop|Drop|DROP|select|Select|SELECT";
             bool test = Regex.IsMatch(searchTerm, pattern);
             return test;
         }
@@ -3346,7 +3328,6 @@ namespace A2DWebRole1
         internal bool TestForSQLInjection(string input)
         {
             string pattern = ConfigurationManager.AppSettings["REGEX_Injection"].ToString();
-            //string pattern = @"(=)|(/)|(\\)|(:)|(--)|(')|admin|Admin|ADMIN|user|User|USER|name|Name|NAME|drop|Drop|DROP|select|Select|SELECT";
             bool test = Regex.IsMatch(input, pattern);
             return test;
         }
